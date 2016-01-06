@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html lang='en'>
+<head>
+    <title>Canvas Demos</title>
+<!--    <script type="text/javascript" src="../tools/jquery.js"></script> -->
+	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="../j19canvas/j19canvas.js"></script>
+    <script type='text/javascript'>
+        var canvas;
+        $(document).ready( function() {
+	        var e = document.getElementById("canvas");
+	        if( e.getContext ) {
+		        canvas = e.getContext('2d');
+		        j19.canvas = canvas;
+		        go();
+	        } else	
+		        alert('Sorry ... Your Browser Does Not Support Canvas');
+        })
+        function go() {
+	        canvas.globalAlpha = .3;
+	        var grd=canvas.createLinearGradient(0,0,1000,800);
+	        grd.addColorStop( .2, 'white' );
+	        grd.addColorStop( .8, 'gold' );
+	        canvas.fillStyle=grd;	
+	        canvas.fillRect(0,0,1300,800);
+	
+	        canvas.beginPath();
+	        j19.circle(700,550,50);
+	        canvas.globalAlpha = 1;
+	        canvas.shadowColor = 'black';
+	        canvas.shadowBlur = 10;
+	        canvas.strokeStyle = 'black';
+	        canvas.fillStyle = 'darkgreen';
+	        canvas.lineWidth = 2;
+	        canvas.fill();
+	        canvas.stroke();
+
+	        canvas.shadowColor = 'transparent';
+	        canvas.shadowBlur = 0;
+	
+	        x = 150;
+	        y = 700;
+	        y_increment = -5;
+	        x_increment = 10;
+	        canvas.globalAlpha = .1;
+	        canvas.lineWidth = 5;
+	        j19.repeat( draw, 140, 5, {}, title );
+        }
+        function draw() {
+	        canvas.beginPath();
+	        canvas.moveTo(25,100);
+	        canvas.lineTo(x,y);
+	        canvas.stroke();
+	        y += y_increment;
+	        x += x_increment;
+	        if( x > 1000 ) x_increment *= -1;
+        }
+        function title() {
+	        canvas.font="48px Palatino Linotype";
+	        canvas.fillStyle = 'gold';
+	        canvas.globalAlpha = 0;
+	        canvas.shadowColor = 'black';
+	        canvas.shadowBlur = 3;
+	        var delay = 50;
+	        canvas.rotate( j19.degreesToRadians(-12) );
+	        j19.repeat( showTxt, 50, delay, {txt:'Canvas', x:50, y:90} );
+        }
+        function showTxt(parms) {
+	        canvas.globalAlpha += .01;
+	        canvas.fillText( parms.txt, parms.x, parms.y );
+        }
+        var windowOptions = 'height=700,width=1000,left=50,top=20,resizable=yes,scrollbars=yes,toolbar=no,menubar=no,location=no,directories=no,status=no';
+        function show(file) {	
+	        window.open(file, '', windowOptions);
+        }
+</script>
+<style type="text/css">
+    * { margin:0px; padding:0px; font-family:'Segoe UI', sans-serif; font-size:1em; font-weight:normal; }
+    a { font-size:1em; color:blue; font-weight:normal; margin:0px; padding:0px; text-decoration:none; }
+    h2 { font-weight:normal;  font-size:1.4em; color:navy;  }
+    li{ margin-bottom:15px; font-size:1.2em; color:green; }
+    #examples_title { font-size:1.6em; color:white; padding-bottom:7px; }
+    #examples_list { padding-top:10px; padding-left:20px; border-top:1px solid navy;}
+    #examples_div { position:absolute; top:100px; left:100px;}
+    #starter { position:absolute; top:531px; left:670px; color:white; font-size:1.2em;}
+    #examples_list { width:600px; height:300px; }
+    #examples_list li { float:left; width:200px; }
+</style>
+</head>
+<body>
+    <h2 id='title2'></h2>
+    <h2 id='title3'></h2>
+    <canvas id="canvas" width="1300" height="800">
+        Required Web Browser Feature - HTML5.Canvas - Not Supported By This Browser
+    </canvas>
+    <div id='examples_div'>
+	    <h2 id='examples_title'>Examples</h2>
+	    <ul id='examples_list'>
+		    <li><a href='javascript:show("orange_stripes.html")'>Orange Stripes</a></li>
+		    <li><a href='javascript:show("hello.html")'>Hello</a></li>
+		    <li><a href='javascript:show("lovely 3d.html")'>Lovely 3d</a></li>
+		    <li><a href='javascript:show("cool.html")'>Cool</a></li>
+		    <li><a href='javascript:show("abc.html")'>A B C</a></li>
+		    <li><a href='javascript:show("quad_plot.html")'>Quad Plot</a></li>
+		    <li><a href='javascript:show("happy.html")'>Happy</a></li>
+		    <li><a href='javascript:show("heart.html")'>Heart</a></li>
+		    <li><a href='javascript:show("seaball.html")'>Seaball</a></li>
+		    <li><a href='javascript:show("squigly.html")'>Squigly</a></li>
+		    <li><a href='javascript:show("text.html")'>Text</a></li>
+		    <li><a href='javascript:show("oddj.html")'>OddJ</a></li>
+		    <li><a href='javascript:show("spiral.html")'>Spiral</a></li>
+	    </ul>
+    </div>
+    <a id='starter' href='canvas_starter.pdf' target="_blank">S t a r t</a>
+</body>
+</html>
